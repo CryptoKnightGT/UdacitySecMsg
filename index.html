@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=firefox">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Deploy a Remix Contract</title>
 
     <link rel="stylesheet" type="text/css" href="main.css">
@@ -22,19 +22,19 @@
         <input id="userInput" type="text">
 
         <button id="setMessageButton">Set secret message</button>
+        <button class="enableEthereumButton">Enable Ethereum</button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
     <script>
 
-        // Connect to the web3 provider
+        // Connect a the web3 provider
         if (typeof web3 !== 'undefined') {
-            web3 = new Web3(web3.currentProvider);
-            console.log("Connected to MM");
+            web3 = new Web3(window.ethereum);
+            console.log("meta!!!!!!")
         } else {
             web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
-            console.log("Connected to local server");
         }
 
         // Set a default account
@@ -78,13 +78,21 @@
             );
 
 
+
+
         $("#setMessageButton").click(function () {
             RemixContract.methods.setMessage($("#userInput").val()).send();
             console.log($("#userInput").val())
+        });
+
+        const ethereumButton = document.querySelector('.enableEthereumButton');
+
+        ethereumButton.addEventListener('click', () => {
+          //Will Start the metamask extension
+          ethereum.request({ method: 'eth_requestAccounts' });
         });
 
     </script>
 </body>
 
 </html>
-
